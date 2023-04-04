@@ -23,7 +23,7 @@ Now, since the folder structure for credentials follow this pattern shown below:
 └── login_url
 ```
 *Note: for the sake of this being an installation guide, 
-I'll use the folder `~/secrets/university` for demo, 
+I'll use the folder `~/.secrets/university` for demo, 
 `uni_network` for the ssid, 
 `https://university-website/login` for the url. 
 You may choose whichever folder you prefer*
