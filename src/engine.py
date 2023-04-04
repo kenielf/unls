@@ -1,9 +1,7 @@
 from selenium.common.exceptions import WebDriverException
 from selenium import webdriver
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.firefox.options import Options
-from seleniumrequests.request import RequestsSessionMixin
 from typing import Dict, Union
 from log import debug, info, error
 from time import sleep
@@ -12,13 +10,16 @@ from bs4 import BeautifulSoup, Tag, NavigableString
 
 def create_webdriver() -> WebDriver:
     info("Starting webdriver using 'Firefox'...")
-    driver = webdriver.Firefox()
+    opts = Options()
+    opts.add_argument("--headless")
+    opts.add_argument("--disable-gpu")
+    driver = webdriver.Firefox(options=opts)
     driver.delete_all_cookies()
     return driver
 
 
 def connect(address: str, cred: Dict[str, str]) -> None:
-    # Create webdriver (TODO: Make it headless)
+    # Create webdriver
     driver: WebDriver = create_webdriver()
     # Connect to the website
     info(f"Accessing '{address}'...")
@@ -31,10 +32,8 @@ def connect(address: str, cred: Dict[str, str]) -> None:
     sleep(0.25)  # NOTE: This gives enough time to account for slow machines/networks.
 
     # Verify that credential fields exist
-    with open("../pages/page-login.php") as file:
-        html: BeautifulSoup = BeautifulSoup(file.read(), "lxml")
-    #html: BeautifulSoup = BeautifulSoup(driver.page_source)
-    result: Union[Tag, NavigableString, None] = html.find("input", {"id": "lkfalkfaslfksdfl"})
+    html: BeautifulSoup = BeautifulSoup(driver.page_source, "lxml")
+    result: Union[Tag, NavigableString, None] = html.find("input", {"id": "password"})
     if result is None:
         error("Could not find credential fields, exiting!", 1)
     else:
