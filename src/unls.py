@@ -64,4 +64,6 @@ if __name__ == "__main__":
         "username": uni_user,
         "password": uni_pass,
     })
+    # <!-- Finish -->
+    info("Done!")
 

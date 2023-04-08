@@ -1,6 +1,6 @@
 from typing import List
 from subprocess import run, DEVNULL
-from log import debug, error
+from log import info, debug, error
 
 
 #CMDS="nmcli gpg"
@@ -10,6 +10,7 @@ from log import debug, error
 #        echo -e "\x1b[31m[DOES NOT EXIST]\x1b[00m ${prog}"
 #done
 def check_deps(dep_list: List[str]) -> None:
+    info("Checking for dependencies")
     missing: List[str] = []
     for program in dep_list:
         code: int = run(["which", program], stdout=DEVNULL, stderr=DEVNULL).returncode
