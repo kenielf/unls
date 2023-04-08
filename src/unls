@@ -14,7 +14,7 @@ from engine import connect
 HOME: str = getenv("HOME", "") if platform == "linux" else ""
 
 # GPG
-GPG_CMD: str = "gpg2"
+GPG_CMD: str = "gpg"
 
 # <!-- Main -->
 if __name__ == "__main__":
@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     # <!-- Check dependencies -->
     check_deps([
-        "gpg2", "nmcli", "geckodriver"
+        GPG_CMD, "nmcli", "geckodriver"
     ])
     # <!-- Verify SSIDs -->
     info("Verifying SSIDs...")
@@ -64,6 +64,7 @@ if __name__ == "__main__":
         "username": uni_user,
         "password": uni_pass,
     })                            # <-- Close webdriver -->
+    # TODO: remove extra messages that should have been removed ↓
     debug("Matched all xpaths relating to user logon!")
     info("Closing webdriver...")
 
