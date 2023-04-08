@@ -10,6 +10,7 @@ GPG_ARGS = [
     GPG_CMD, "--batch", "--yes",
 ]
 
+
 # Decrypt the contents using a passphrase, returning a string
 def decrypt(encrypted_content: bytes, passphrase: Union[str, None]) -> str:
     # Start the commands pipeline
@@ -50,4 +51,3 @@ def encrypt(content: str, passphrase: str) -> bytes:
     stdout: bytes = gpg.communicate(content.encode("utf-8"))[0]
     # Return the pure stdout
     return stdout
-

@@ -6,15 +6,13 @@ from os import getenv
 from sys import platform
 from subprocess import run
 from log import debug, info, warn, error
-from gpg import decrypt_file
+from gpg import GPG_CMD, decrypt_file
 from utils import check_deps
 from engine import connect
 # <!-- Code -->
 # LINUX
 HOME: str = getenv("HOME", "") if platform == "linux" else ""
 
-# GPG
-GPG_CMD: str = "gpg"
 
 # <!-- Main -->
 if __name__ == "__main__":
@@ -66,4 +64,3 @@ if __name__ == "__main__":
     })
     # <!-- Finish -->
     info("Done!")
-
