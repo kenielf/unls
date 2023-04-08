@@ -65,3 +65,9 @@ UNLS_DEBUG=1 unls
 ## Recommendation
 Personally, I run this script manually whenever I need it, 
 but it might be best to add it into an autostart script of some sort.
+
+## Development
+For some info on development status, [click here](/docs/DEVELOPMENT.md).
+
+# License
+This program is [MIT](/LICENSE) licensed.
