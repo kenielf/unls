@@ -6,14 +6,14 @@
 if [ "${NO_COLOR}" = "1" ]; then
     RESET=""
     RED=""
-    BLUE=""
     YELLOW=""
+    BLUE=""
     CYAN=""
 else
     RESET="\x1b[00m"
     RED="\x1b[31m"
-    BLUE="\x1b[32m"
     YELLOW="\x1b[33m"
+    BLUE="\x1b[34m"
     CYAN="\x1b[36m"
 fi
 
@@ -27,8 +27,12 @@ error() {
         exit 1
 }
 
+warn() {
+    1>&2 printf "${YELLOW}[WARNING]${RESET} %s\n" "${1}"
+}
+
 debug() {
-    printf "${CYAN}[DEBUG]${RESET} %s\n" "${1}"
+    [ "${UNLS_DEBUG}" = "1" ] && printf "${CYAN}[DEBUG]${RESET} %s\n" "${1}"
 }
 
 info() {
@@ -38,7 +42,7 @@ info() {
 # <!-- Code -->
 # Install
 if [ "${1}" = "-i" ]; then
-    debug "Installing"
+    info "Installing"
     # Enable force variable
     if [ "${2}" = "-f" ]; then
         FORCE=1
@@ -64,8 +68,9 @@ if [ "${1}" = "-i" ]; then
     
     # Prompt the user to continue or not if commands are not found.
     if [ -n "${missing}" ]; then
-        printf "${YELLOW}[WARNING]${RESET} %s\n  %s\n%s\n" \
-            "The following command(s) could not be found:" "${missing}" \
+        warn "Some commands were not found!"
+        printf "%s %s\n%s\n" \
+            "Missing:" "${missing}" \
             "Do you want to continue the installation anyway? [y/N]"
         while true; do
             printf " > "
@@ -119,7 +124,7 @@ if [ "${1}" = "-i" ]; then
 
 # Uninstall
 elif [ "${1}" = "-r" ]; then
-    debug "Uninstalling..."
+    info "Uninstalling..."
     if [ -d "${_PATH}" ]; then
         rm -rf "${_PATH}"
         rm -rf "${_BIN_PATH}"
