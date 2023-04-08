@@ -39,7 +39,6 @@ def connect(address: str, cred: Dict[str, str]) -> None:
     else:
         debug("Found input fields! Trying...")
 
-
     # Fill credentials
     debug("Filling credentials...")
     driver.find_element("xpath", r'//*[@id="username"]').send_keys(cred["username"])

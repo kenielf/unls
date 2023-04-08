@@ -63,4 +63,3 @@ def error(text: str, code: Union[int, None] = None) -> None:
     message("ERROR", text, accent="red", use_stderr=True)
     if code is not None:
         exit(code)
-
