@@ -1,6 +1,13 @@
 # University Network Login Script - UNLS
 ![Showcase](/img/showcase.png)
 
+## Usage
+Finally, to execute the program, 
+you may use `UNLS_DEBUG=1` environment variable to enable debug messages
+```bash
+UNLS_DEBUG=1 unls
+```
+
 ## Installation/Updates
 First, clone the repository with
 ```bash
@@ -57,12 +64,13 @@ export the following environment variable in the configuration file:
 export UNI_FLDR="${HOME}/.secrets/university"
 ```
 
-## Usage
-Finally, to execute the program, 
-you may use `UNLS_DEBUG=1` environment variable to enable debug messages
-```bash
-UNLS_DEBUG=1 unls
-```
+## How does it work?
+It first checks the dependencies on runtime, then the current active network, 
+to guarantee that the environment is setup properly. Then, it gets your encrypted credentials, starts a webdriver, 
+connects to the website provided and searches for a form that contains an id equivalent to password, 
+fills it with your credentials and submits it!
+
+This way, it should be mostly independent and work for a majority of cases and different universities.
 
 ## Recommendation
 Personally, I run this script manually whenever I need it, 
