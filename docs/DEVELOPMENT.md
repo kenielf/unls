@@ -22,7 +22,7 @@
 
 
 **Installer & Uninstaller**
- - [ ] Shell Script;
+ - [X] Shell Script;
  - [ ] PKGBUILD
 
 
