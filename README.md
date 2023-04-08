@@ -12,7 +12,7 @@ Use the handy script included with the software to install it for your user:
 ./installer -i
 ```
 *Note: you can add `-f` after the `-i` flag if you're updating or reinstalling the software*  
-*Note 2: you can set the env var `UNLS_DEBUG=1` to show extra info while isntalling*
+*Note 2: you can set the env var `UNLS_DEBUG=1` to show extra info while installing*
 
 ### Manual
 Create a virtual environment, 
@@ -64,4 +64,4 @@ UNLS_DEBUG=1 unls
 
 ## Recommendation
 Personally, I run this script manually whenever I need it, 
-but it might be best to add it into an autostart script of some sorts.
+but it might be best to add it into an autostart script of some sort.
