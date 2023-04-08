@@ -44,11 +44,12 @@ info() {
 if [ "${1}" = "-i" ]; then
     info "Installing"
     # Enable force variable
-    if [ "${2}" = "-f" ]; then
-        FORCE=1
-    else
-        FORCE=0
-    fi
+    FORCE=0
+    for arg in "$@"; do
+        if [ "${arg}" = "-f" ]; then
+            FORCE=1
+        fi
+    done
 
     # Check dependencies
     dependencies="python3 gpg nmcli geckodriver"
