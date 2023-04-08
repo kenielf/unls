@@ -1,4 +1,6 @@
 # University Network Login Script - UNLS
+![Showcase](/img/showcase.png)
+
 ## Installation/Updates
 First, clone the repository with
 ```bash
