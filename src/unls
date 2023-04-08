@@ -6,7 +6,7 @@ from os import getenv
 from sys import platform
 from subprocess import run
 from log import debug, info, warn, error
-from gpg import decrypt
+from gpg import decrypt_file
 from utils import check_deps
 from engine import connect
 # <!-- Code -->
@@ -54,8 +54,8 @@ if __name__ == "__main__":
     # <!-- Verify credentials -->
     info("Getting user credentials...")
     # Get username and password
-    uni_user: str = decrypt(f"{uni_fldr}/cred/username")
-    uni_pass: str = decrypt(f"{uni_fldr}/cred/password")
+    uni_user: str = decrypt_file(f"{uni_fldr}/cred/username", None)
+    uni_pass: str = decrypt_file(f"{uni_fldr}/cred/password", None)
 
     with open(f"{uni_fldr}/login_url", "r") as file:
         url: str = file.read().strip()
@@ -63,8 +63,5 @@ if __name__ == "__main__":
     connect(url, {
         "username": uni_user,
         "password": uni_pass,
-    })                            # <-- Close webdriver -->
-    # TODO: remove extra messages that should have been removed ↓
-    debug("Matched all xpaths relating to user logon!")
-    info("Closing webdriver...")
+    })
 

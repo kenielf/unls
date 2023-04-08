@@ -1,26 +1,53 @@
 # <!-- Imports -->
 from typing import Union
-from os import getenv, PathLike
-from subprocess import run, CompletedProcess
+from os import getenv, PathLike, path
+from subprocess import Popen, PIPE
 from log import debug, error
 
 # <!-- Code -->
 GPG_CMD: str = getenv("GPG_CMD", "gpg")
+GPG_ARGS = [
+    GPG_CMD, "--batch", "--yes",
+]
 
-# Decrypts gpg encrypted files and return its contents as a str
-def decrypt(_path: Union[str, bytes, PathLike]) -> str:
-    output: CompletedProcess = run(
-        [GPG_CMD, "-dq", _path],
-        capture_output=True, text=True
-    )
-    if output.returncode != 0:
-        error(f"Failed to decrypt file '{_path}'", 1)
+# Decrypt the contents using a passphrase, returning a string
+def decrypt(encrypted_content: bytes, passphrase: Union[str, None]) -> str:
+    # Start the commands pipeline
+    if passphrase is not None:
+        gpg: Popen = Popen(
+            [*GPG_ARGS, "--passphrase", passphrase, "-dq"],
+            stdin=PIPE, stdout=PIPE, stderr=PIPE
+        )
     else:
-        debug(f"Successfully decrypted file '{_path}'")
-    return output.stdout.strip()
+        gpg: Popen = Popen(
+            [*GPG_ARGS, "-dq"],
+            stdin=PIPE, stdout=PIPE, stderr=PIPE
+        )
+    stdout: bytes = gpg.communicate(encrypted_content)[0]
+    # Return the decoded stdout
+    return stdout.decode("utf-8", errors="ignore")
 
-# Encrypt
-def encrypt(content: str, _path: Union[str, bytes, PathLike]) -> None:
 
-    pass
+# Decrypts the file and return the decrypted stripped contents 
+def decrypt_file(_path: Union[str, bytes, PathLike], passphrase: Union[str, None]) -> str:
+    # Check if the file exists
+    if not path.isfile(_path):
+        error("File does not exist!", 1)
+
+    # Read the file and decrypt it
+    debug(f"Reading from file: '{_path}'")
+    with open(_path, "rb") as file:
+        return decrypt(file.read(), passphrase).strip()
+
+
+# Encrypt the contents using a passphrase and return bytes
+def encrypt(content: str, passphrase: str) -> bytes:
+    # Start the commands pipeline
+    gpg: Popen = Popen(
+        [*GPG_ARGS, "--passphrase", passphrase, "--symmetric"],
+        stdin=PIPE, stdout=PIPE, stderr=PIPE
+    )
+    stdout: bytes = gpg.communicate(content.encode("utf-8"))[0]
+    # Return the pure stdout
+    return stdout
 

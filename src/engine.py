@@ -41,9 +41,11 @@ def connect(address: str, cred: Dict[str, str]) -> None:
 
 
     # Fill credentials
+    debug("Filling credentials...")
     driver.find_element("xpath", r'//*[@id="username"]').send_keys(cred["username"])
     driver.find_element("xpath", r'//*[@id="password"]').send_keys(cred["password"])
     driver.find_element("xpath", r'//*[@type="submit"]').submit()
 
     # Close webdriver
+    debug("Closing webdriver")
     driver.quit()
