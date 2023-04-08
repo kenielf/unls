@@ -2,6 +2,10 @@
 .env
 .venv
 
+# IDEs
+.idea
+.vscode
+
 # Cache
 __pycache__/
 
