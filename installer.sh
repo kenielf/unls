@@ -111,6 +111,7 @@ if [ "${1}" = "-i" ]; then
     debug "Installing binary..."
     install -D -m755 "src/unls" "${_PATH}/bin/unls"
     ln -sfT "${_PATH}/bin/unls" "${_BIN_PATH}"
+    install -D -m644 "LICENSE" "${_PATH}/LICENSE"
     
     # Create virtual environment and install dependencies
     debug "Creating environment..."
