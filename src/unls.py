@@ -15,6 +15,8 @@ HOME: str = getenv("HOME", "") if platform == "linux" else ""
 
 
 # <!-- Main -->
+# TODO: Proper forceful exit
+# TODO: WINDOWS SUPPORT!
 if __name__ == "__main__":
     warn("This program is still in development! Contact the developers if any issues arise.")
     # <!-- Get environment variables -->
@@ -52,12 +54,16 @@ if __name__ == "__main__":
     # <!-- Verify credentials -->
     info("Getting user credentials...")
     # Get username and password
+    # TODO: Add some form of input loop to get credentials if passwd is wrong.
+    # TODO: Implement a register method, to create the necessary files.
     uni_user: str = decrypt_file(f"{uni_fldr}/cred/username", None)
     uni_pass: str = decrypt_file(f"{uni_fldr}/cred/password", None)
 
     with open(f"{uni_fldr}/login_url", "r") as file:
         url: str = file.read().strip()
     # <!-- Login -->
+    # TODO: Possibly cloning the geckodriver instead of a system package?
+    # TODO: Configure the web engine to place the log file in the /tmp dir.
     connect(url, {
         "username": uni_user,
         "password": uni_pass,
